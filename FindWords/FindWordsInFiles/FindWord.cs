@@ -48,6 +48,7 @@ namespace FindWords.FindWordsInFiles
             int amountInFile3 = CountOccurrences(file3, word);
             
             string max = GetMaximum(amountInFile1, amountInFile2, amountInFile3);
+
             return max;
         }
 
@@ -58,21 +59,25 @@ namespace FindWords.FindWordsInFiles
                 if(num1 > num3)
                 {
                     root.amount = num1;
+                    root.fileName = "File 1";
                     return "File 1";
                 }
                 else
                 {
+                    root.fileName = "File 3";
                     root.amount = num3;
                     return "File 3";
                 }
             }
             else if (num2 > num3)
-            { 
+            {
+                root.fileName = "File 2";
                 root.amount = num2;
                 return "File 2";
             }
             else
             {
+                root.fileName = "File 3";
                 root.amount = num3;
                 return "File 3";
             }

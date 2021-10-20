@@ -10,6 +10,7 @@ namespace FindWords.Trees
     {
         public string value { get; set; }
         public int amount { get; set; }
+        public string fileName {get; set;}
         public Node left;
         public Node right;
     }
