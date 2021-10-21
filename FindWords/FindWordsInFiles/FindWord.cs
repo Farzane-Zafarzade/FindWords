@@ -1,36 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FindWords.Utillity;
+using FindWords.Model;
 using FindWords.Trees;
+using System.Collections.Generic;
 
 namespace FindWords.FindWordsInFiles
 {
     public class FindWord
     {
         private Node root = new();
-        private string[] file1;
-        private string[] file2;
-        private string[] file3;
+        private List<Word> file1 = new();
+        private List<Word> file2 = new();
+        private List<Word> file3 = new();
+        private bool keepGoing = true;
+
         private char[] splitItems = { ' ', '.', ',', '-','\t','\n',';' };
 
         public void Run()
         {
             Console.Write("\n Enter the first file path: ");
             ReadFile.pathFile = Console.ReadLine();
-            file1 = Split(ReadFile.ReadingFromFile().ToLower());
+            string textOfFile1 = ReadFile.ReadingFromFile().ToLower();
+            InserInList(file1, textOfFile1);
             Console.Write("\n Enter the second file path: ");
             ReadFile.pathFile = Console.ReadLine();
-            file2 = Split(ReadFile.ReadingFromFile().ToLower());
+            string textOfFile2 = ReadFile.ReadingFromFile().ToLower();
+            InserInList(file2, textOfFile2);
             Console.Write("\n Enter the third file path: ");
             ReadFile.pathFile = Console.ReadLine();
-            file3 = Split(ReadFile.ReadingFromFile().ToLower());
-            Console.Write("\n Enter the word you want to search: ");
-            root.value = Console.ReadLine().ToLower().Trim();
-            string FileName = FindMaxOccurrences(root.value);
-            Console.WriteLine("\n {0} has maximum amount of {1} and it is {2}", FileName,root.value,root.amount);
+            string textOfFile3 = ReadFile.ReadingFromFile().ToLower();
+            InserInList(file3, textOfFile3);
+            while (keepGoing)
+            {
+                Console.Write("\n Enter the word you want to search: ");
+                root.word.name = Console.ReadLine().ToLower().Trim();
+                string FileName = FindMaxOccurrences(root.word.name);
+                Console.WriteLine("\n {0} has maximum amount of {1} and it is {2}", FileName, root.word.name, root.word.amount);
+                Console.Write("Want to search another word? (y/n) ");
+                string answer = Console.ReadLine().Trim().ToLower();
+                if (answer == "n")
+                {
+                    keepGoing = false;
+                }
+            }
+            
         }
 
         private string[] Split(string text)
@@ -58,43 +71,64 @@ namespace FindWords.FindWordsInFiles
             {
                 if(num1 > num3)
                 {
-                    root.amount = num1;
-                    root.fileName = "File 1";
+                    root.word.amount = num1;
                     return "File 1";
                 }
                 else
                 {
-                    root.fileName = "File 3";
-                    root.amount = num3;
+                    
+                    root.word.amount = num3;
                     return "File 3";
                 }
             }
             else if (num2 > num3)
             {
-                root.fileName = "File 2";
-                root.amount = num2;
+                root.word.amount = num2;
                 return "File 2";
             }
             else
             {
-                root.fileName = "File 3";
-                root.amount = num3;
+                root.word.amount = num3;
                 return "File 3";
             }
         }
 
-        private int CountOccurrences(string[] arrayOfWords, string word)
+        private int CountOccurrences(List<Word> wordsInList, string word)
         {
-            int count = 0;
-          
-            for (int i = 0; i < arrayOfWords.Length; i++)
+            foreach(var item in wordsInList)
             {
-                if (word.Equals(arrayOfWords[i]))
+                if (item.name == word)
                 {
-                    count++;
+                    return item.amount;
                 }
             }
-            return count;
+            return 0;
+        }
+
+        public void InserInList(List<Word> words, string textFromFile)
+        {
+            string[] WordsIntext = textFromFile.Split(splitItems);
+            foreach (var word in WordsIntext)
+            {
+
+                int index =BinarySearch.Search(words, word); //n(nlog n)
+                if (index == -1)
+                {
+                    Word newWord = new()
+                    {
+                        name = word,
+                        amount = 1
+                    };
+                    words.Add(newWord);
+                   //o(n^2) - använda merge sort 
+                }
+                else
+                {
+                     words[index].amount++;
+                    
+                }
+
+            }
         }
     }
 }

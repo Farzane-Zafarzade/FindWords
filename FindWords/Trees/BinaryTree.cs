@@ -16,9 +16,9 @@ namespace FindWords.Trees
             if (root == null)
             {
                 root = new Node();
-                root.value = v;
+                root.word.name = v;
             }
-            else if (v.CompareTo(root.value) == -1)
+            else if (v.CompareTo(root.word.name) == -1)
             {
                 root.left = Insert(root.left, v);
             }
@@ -36,7 +36,7 @@ namespace FindWords.Trees
             {
                 return;
             }
-            Console.WriteLine(root.value + "");
+            Console.WriteLine(root.word.name + "");
             Traverse(root.left);
             Traverse(root.right);
         }
