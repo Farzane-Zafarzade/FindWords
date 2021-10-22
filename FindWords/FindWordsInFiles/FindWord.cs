@@ -108,10 +108,10 @@ namespace FindWords.FindWordsInFiles
         public void InserInList(List<Word> words, string textFromFile)
         {
             string[] WordsIntext = textFromFile.Split(splitItems);
-            foreach (var word in WordsIntext)
+            foreach (var word in WordsIntext) // O(n)
             {
 
-                int index =BinarySearch.Search(words, word); //n(nlog n)
+                int index = BinarySearch.Search(words, word); //O( n log(n))
                 if (index == -1)
                 {
                     Word newWord = new()
@@ -119,13 +119,28 @@ namespace FindWords.FindWordsInFiles
                         name = word,
                         amount = 1
                     };
-                    words.Add(newWord);
-                   //o(n^2) - använda merge sort 
+                    int lenght = words.Count;
+                    if (lenght == 0)
+                    {
+                        words.Add(newWord);
+                    }
+                    else
+                    {
+                        while (lenght > 0 && words[lenght - 1].name.CompareTo(newWord.name) == 1)
+                        {
+                            lenght--;
+                        }
+                        words.Insert(lenght, newWord);
+
+                    }
+
+
+                    // - använda merge sort O( n log(n))
                 }
                 else
                 {
-                     words[index].amount++;
-                    
+                    words[index].amount++;
+
                 }
 
             }

@@ -14,6 +14,11 @@ namespace FindWords.Utillity
             int count = 0;
             int l = 0;
             int r = words.Count - 1;
+
+            if(words.Count == 0)
+            {
+                return -1;
+            }
             while (l <= r)
             {
                 int m = (l + r) / 2;
@@ -32,7 +37,7 @@ namespace FindWords.Utillity
                 }
             }
            
-            return count;
+            return -1;
         }
     }
 }
