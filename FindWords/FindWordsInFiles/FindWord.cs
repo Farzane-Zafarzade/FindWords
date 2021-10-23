@@ -8,8 +8,8 @@ namespace FindWords.FindWordsInFiles
 {
     public class FindWord
     {
-        Node root = new();
-        private Word resualt= new();
+        private BinaryTree myTree = new();
+        private Node root = new();
         private List<Word> file1 = new();
         private List<Word> file2 = new();
         private List<Word> file3 = new();
@@ -34,19 +34,20 @@ namespace FindWords.FindWordsInFiles
             while (keepGoing)
             {
                 Console.Write("\n Enter the word you want to search: ");
-                resualt.name = Console.ReadLine().ToLower().Trim();
-                string FileName = FindMaxOccurrences(resualt.name);
-                Console.WriteLine("\n {0} <{1}> and it is {2}", FileName, resualt.name, resualt.amount);
-                root = InsertResultatInTree(resualt);
-                if (root != null)
-                {
-                    Console.WriteLine("\n {0} is added to Binary three ", root.word.name);
-                }
+                string searchWord = Console.ReadLine().ToLower().Trim();
+                Word newWord = FindMaxOccurrences(searchWord);
+                Console.WriteLine("\n {0} has max amount of <{1}> and it is {2}", newWord.FlieName, newWord.name, newWord.amount);
+                myTree.Insert(root, newWord);
+     
                 Console.Write("\n Want to search another word? (y/n) ");
                 string answer = Console.ReadLine().Trim().ToLower();
                 if (answer == "n")
                 {
+                    Console.WriteLine("\n Search resultat is: ");
+                    myTree.Traverse(root);
                     keepGoing = false;
+                    Console.WriteLine("\n Press Enter to exit");
+                    Console.ReadKey();
                 }
             }
             
@@ -58,52 +59,77 @@ namespace FindWords.FindWordsInFiles
             return words;  
         }
 
-        private string FindMaxOccurrences(string word)
+        private Word FindMaxOccurrences(string word)
         {
+            Word result= new();
             int amountInFile1 = CountOccurrences(file1, word);
            
             int amountInFile2 = CountOccurrences(file2, word);
           
             int amountInFile3 = CountOccurrences(file3, word);
             
-            string max = GetMaximum(amountInFile1, amountInFile2, amountInFile3);
+            int max = GetMaximum(amountInFile1, amountInFile2, amountInFile3);
 
-            return max;
+            switch (max)
+            {
+                case -1:
+                    result.name = word;
+                    result.amount = 0;
+                    break;
+                case 0:
+                    result.name = word;
+                    result.amount = amountInFile1;
+                    result.FlieName = "All";
+                    break;
+                case 1:
+                    result.name = word;
+                    result.amount = amountInFile1;
+                    result.FlieName = "File 1";
+                    break;
+                case 2:
+                    result.name = word;
+                    result.amount = amountInFile2;
+                    result.FlieName = "File 2";
+                    break;
+                case 3:
+                    result.name = word;
+                    result.amount = amountInFile3;
+                    result.FlieName = "File 3";
+                    break;
+            }
+
+            return result;
+
         }
 
-        private string GetMaximum(int num1, int num2, int num3)
+        private int GetMaximum(int num1, int num2, int num3)
         {
             if(num1==num2 && num2 == num3)
             {
                 if (num1 == -1)
                 {
-                    return "This word does not exist in all tree files";
+                    return -1;
                 }
-                return "There is equal amount in three files";
+                return 0;
             }
             if(num1 > num2)
             {
                 if(num1 > num3)
                 {
-                    resualt.amount = num1;
-                    return "File 1 has maximum amount of";
+                    return 1;
                 }
                 else
                 {
-                    
-                    resualt.amount = num3;
-                    return "File 3 has maximum amount of";
+                    return 3;
                 }
             }
             else if (num2 > num3)
             {
-                resualt.amount = num2;
-                return "File 2 has maximum amount of";
+                return 2;
             }
             else
             {
-                resualt.amount = num3;
-                return "File 3 has maximum amount of";
+                return 3;
             }
         }
 
@@ -169,12 +195,10 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        private Node InsertResultatInTree(Word newWord)
+        private void InsertResultatInTree(Word newWord)
         {
-            BinaryTree myTree = new();
-            Node root = new();
             myTree.Insert(root,newWord);
-            return root;
+            
         }
     }
 }

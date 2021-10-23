@@ -4,6 +4,7 @@ using FindWords.FindWordsInFiles;
 using FindWords.Trees;
 using System.Collections.Generic;
 using FindWords.Model;
+using FindWords.Trees;
 
 
 namespace FindWords
@@ -14,7 +15,7 @@ namespace FindWords
         static void Main(string[] args)
         { 
             FindWord MyProgram = new();
-            MyProgram.Run(); 
+            MyProgram.Run();  
         }
 
         

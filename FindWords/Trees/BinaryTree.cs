@@ -17,6 +17,7 @@ namespace FindWords.Trees
             {
                 root = new Node();
                 root.word = v;
+                Console.WriteLine("\n <{0}> is add to data struckture",root.word.name);
             }
             else if (v.name.CompareTo(root.word.name) == -1)
             {
@@ -37,7 +38,7 @@ namespace FindWords.Trees
             {
                 return;
             }
-            Console.WriteLine(root.word.name + "");
+            Console.Write(" - " + root.word.name);
             Traverse(root.left);
             Traverse(root.right);
         }

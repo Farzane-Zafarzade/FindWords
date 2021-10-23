@@ -10,5 +10,6 @@ namespace FindWords.Model
     {
         public string name { get; set; }
         public int amount { get; set; }
+        public string FlieName { get; set; }
     }
 }
