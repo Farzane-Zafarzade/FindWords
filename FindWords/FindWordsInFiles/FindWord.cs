@@ -40,7 +40,7 @@ namespace FindWords.FindWordsInFiles
                 root = InsertResultatInTree(resualt);
                 if (root != null)
                 {
-                    Console.WriteLine("\n {0} is added to Binary three ");
+                    Console.WriteLine("\n {0} is added to Binary three ", root.word.name);
                 }
                 Console.Write("\n Want to search another word? (y/n) ");
                 string answer = Console.ReadLine().Trim().ToLower();
