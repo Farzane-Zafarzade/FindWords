@@ -8,7 +8,8 @@ namespace FindWords.FindWordsInFiles
 {
     public class FindWord
     {
-        private Node root = new();
+        Node root = new();
+        private Word resualt= new();
         private List<Word> file1 = new();
         private List<Word> file2 = new();
         private List<Word> file3 = new();
@@ -33,9 +34,14 @@ namespace FindWords.FindWordsInFiles
             while (keepGoing)
             {
                 Console.Write("\n Enter the word you want to search: ");
-                root.word.name = Console.ReadLine().ToLower().Trim();
-                string FileName = FindMaxOccurrences(root.word.name);
-                Console.WriteLine("\n {0} <{1}> and it is {2}", FileName, root.word.name, root.word.amount);
+                resualt.name = Console.ReadLine().ToLower().Trim();
+                string FileName = FindMaxOccurrences(resualt.name);
+                Console.WriteLine("\n {0} <{1}> and it is {2}", FileName, resualt.name, resualt.amount);
+                root = InsertResultatInTree(resualt);
+                if (root != null)
+                {
+                    Console.WriteLine("\n {0} is added to Binary three ");
+                }
                 Console.Write("\n Want to search another word? (y/n) ");
                 string answer = Console.ReadLine().Trim().ToLower();
                 if (answer == "n")
@@ -79,31 +85,31 @@ namespace FindWords.FindWordsInFiles
             {
                 if(num1 > num3)
                 {
-                    root.word.amount = num1;
+                    resualt.amount = num1;
                     return "File 1 has maximum amount of";
                 }
                 else
                 {
                     
-                    root.word.amount = num3;
+                    resualt.amount = num3;
                     return "File 3 has maximum amount of";
                 }
             }
             else if (num2 > num3)
             {
-                root.word.amount = num2;
+                resualt.amount = num2;
                 return "File 2 has maximum amount of";
             }
             else
             {
-                root.word.amount = num3;
+                resualt.amount = num3;
                 return "File 3 has maximum amount of";
             }
         }
 
-        private int CountOccurrences(List<Word> wordsInList, string word)  // ToDo: BinarySearch istället för
+        private int CountOccurrences(List<Word> wordsInList, string word)  
         {
-            int index=BinarySearch.Search(wordsInList, word);
+            int index=BinarySearch.Search(wordsInList, word);//O(log n)
             if(index>= 0)
             {
                 return wordsInList[index].amount;
@@ -115,7 +121,7 @@ namespace FindWords.FindWordsInFiles
 
            /* foreach(var item in wordsInList)
             {
-                if (item.name == word)
+                if (item.name == word) o(n)
                 {
                     return item.amount;
                 }
@@ -129,7 +135,7 @@ namespace FindWords.FindWordsInFiles
             foreach (var word in WordsIntext) // O(n)
             {
 
-                int index = BinarySearch.Search(words, word); //O( n log(n))
+                int index = BinarySearch.Search(words, word); //O(log(n))
                 if (index == -1)
                 {
                     int lenght = words.Count;
@@ -145,7 +151,7 @@ namespace FindWords.FindWordsInFiles
                     }
                     else
                     {
-                        while (lenght > 0 && words[lenght - 1].name.CompareTo(newWord.name) == 1)
+                        while (lenght > 0 && words[lenght - 1].name.CompareTo(newWord.name) == 1) //O(n)
                         {
                             lenght--;
                         }
@@ -153,8 +159,6 @@ namespace FindWords.FindWordsInFiles
 
                     }
 
-
-                    // - använda merge sort O( n log(n))
                 }
                 else
                 {
@@ -163,6 +167,14 @@ namespace FindWords.FindWordsInFiles
                 }
 
             }
+        }
+
+        private Node InsertResultatInTree(Word newWord)
+        {
+            BinaryTree myTree = new();
+            Node root = new();
+            myTree.Insert(root,newWord);
+            return root;
         }
     }
 }
