@@ -35,8 +35,8 @@ namespace FindWords.FindWordsInFiles
                 Console.Write("\n Enter the word you want to search: ");
                 root.word.name = Console.ReadLine().ToLower().Trim();
                 string FileName = FindMaxOccurrences(root.word.name);
-                Console.WriteLine("\n {0} has maximum amount of {1} and it is {2}", FileName, root.word.name, root.word.amount);
-                Console.Write("Want to search another word? (y/n) ");
+                Console.WriteLine("\n {0} <{1}> and it is {2}", FileName, root.word.name, root.word.amount);
+                Console.Write("\n Want to search another word? (y/n) ");
                 string answer = Console.ReadLine().Trim().ToLower();
                 if (answer == "n")
                 {
@@ -67,42 +67,60 @@ namespace FindWords.FindWordsInFiles
 
         private string GetMaximum(int num1, int num2, int num3)
         {
+            if(num1==num2 && num2 == num3)
+            {
+                if (num1 == -1)
+                {
+                    return "This word does not exist in all tree files";
+                }
+                return "There is equal amount in three files";
+            }
             if(num1 > num2)
             {
                 if(num1 > num3)
                 {
                     root.word.amount = num1;
-                    return "File 1";
+                    return "File 1 has maximum amount of";
                 }
                 else
                 {
                     
                     root.word.amount = num3;
-                    return "File 3";
+                    return "File 3 has maximum amount of";
                 }
             }
             else if (num2 > num3)
             {
                 root.word.amount = num2;
-                return "File 2";
+                return "File 2 has maximum amount of";
             }
             else
             {
                 root.word.amount = num3;
-                return "File 3";
+                return "File 3 has maximum amount of";
             }
         }
 
-        private int CountOccurrences(List<Word> wordsInList, string word)
+        private int CountOccurrences(List<Word> wordsInList, string word)  // ToDo: BinarySearch istället för
         {
-            foreach(var item in wordsInList)
+            int index=BinarySearch.Search(wordsInList, word);
+            if(index>= 0)
+            {
+                return wordsInList[index].amount;
+            }
+            else
+            {
+                return -1;
+            }
+
+           /* foreach(var item in wordsInList)
             {
                 if (item.name == word)
                 {
                     return item.amount;
                 }
             }
-            return 0;
+            return 0;*/
         }
 
         public void InserInList(List<Word> words, string textFromFile)
@@ -114,12 +132,13 @@ namespace FindWords.FindWordsInFiles
                 int index = BinarySearch.Search(words, word); //O( n log(n))
                 if (index == -1)
                 {
+                    int lenght = words.Count;
                     Word newWord = new()
                     {
                         name = word,
                         amount = 1
                     };
-                    int lenght = words.Count;
+                    
                     if (lenght == 0)
                     {
                         words.Add(newWord);

@@ -11,7 +11,6 @@ namespace FindWords.Utillity
     {
         public static int Search(List<Word> words, string x)
         {
-            int count = 0;
             int l = 0;
             int r = words.Count - 1;
 
