@@ -85,7 +85,7 @@ namespace FindWords.FindWordsInFiles
                     Console.Write("\n Enter the word you want to search: ");
                     string searchWord = Console.ReadLine().ToLower().Trim();
                     Word newWord = FindMaxOccurrences(searchWord);
-                    Console.WriteLine("\n {0} has max amount of <{1}> and it is {2}", newWord.FlieName, newWord.name, newWord.amount);
+                    Console.WriteLine("\n Max amount of {0} is {1} in {2}", newWord.name, newWord.amount, newWord.FlieName);
                     myTree.Insert(root, newWord);
                     BackToMenu();
                     break;
@@ -167,11 +167,12 @@ namespace FindWords.FindWordsInFiles
                 case -1:
                     result.name = word;
                     result.amount = 0;
+                    result.FlieName = " none of files ";
                     break;
                 case 0:
                     result.name = word;
                     result.amount = amountInFile1;
-                    result.FlieName = "All";
+                    result.FlieName = "all files";
                     break;
                 case 1:
                     result.name = word;
@@ -286,15 +287,15 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        private void GetWordsFromFile(List<Word> file, int amount)
+        private void GetWordsFromFile(List<Word> file, int num)
         {
             foreach(var item in file)
             {
-                while (item.amount > 0 && amount>0)
+                while (item.amount > 0 && num>0)
                 {
                     Console.Write(item.name + " - ");
                     item.amount--;
-                    amount--;
+                    num--;
                 }
                 
             }
