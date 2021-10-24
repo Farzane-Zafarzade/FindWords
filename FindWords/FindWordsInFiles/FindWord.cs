@@ -31,8 +31,11 @@ namespace FindWords.FindWordsInFiles
             ReadFile.pathFile = Console.ReadLine();
             string textOfFile3 = ReadFile.ReadingFromFile().ToLower();
             InserInList(file3, textOfFile3);
-            while (keepGoing)
+            ShowMenu();
+           /* while (keepGoing)
             {
+
+
                 Console.Write("\n Enter the word you want to search: ");
                 string searchWord = Console.ReadLine().ToLower().Trim();
                 Word newWord = FindMaxOccurrences(searchWord);
@@ -49,15 +52,104 @@ namespace FindWords.FindWordsInFiles
                     Console.WriteLine("\n Press Enter to exit");
                     Console.ReadKey();
                 }
-            }
+            }*/
             
         }
 
-        private string[] Split(string text)
+        private void ShowMenu()
         {
-           string[] words = text.Split(splitItems);
-            return words;  
+            Console.Clear();
+            Console.WriteLine("\n 1.Find the max number of occurrences. ");
+            Console.WriteLine("\n 2.Show the first words. ");
+            Console.WriteLine("\n 3.Show the search results. ");
+            Console.WriteLine("\n 4.Exit\n");
+            Console.WriteLine(" \n------------------\n");
+            Console.Write(" Select an option: ");
+            _ = int.TryParse(Console.ReadLine(), out int choice);
+            while (choice != 1 && choice != 2 && choice != 3 && choice != 4)
+            {
+                Console.Write("\n Invalid input, try again: ");
+                _ = int.TryParse(Console.ReadLine(), out choice);
+            }
+
+            ShowSelectedOption(choice);
         }
+
+
+        public void ShowSelectedOption(int choice)
+        {
+            switch (choice)
+            {
+                case 1:
+                    Console.Clear();
+                    Console.Write("\n Enter the word you want to search: ");
+                    string searchWord = Console.ReadLine().ToLower().Trim();
+                    Word newWord = FindMaxOccurrences(searchWord);
+                    Console.WriteLine("\n {0} has max amount of <{1}> and it is {2}", newWord.FlieName, newWord.name, newWord.amount);
+                    myTree.Insert(root, newWord);
+                    BackToMenu();
+                    break;
+
+                case 2:
+                    Console.Clear();
+                    Console.Write("\n Choose the file you want to show words from that (file1 , file2 , flie3): ");
+                    string fileName = Console.ReadLine().Trim().ToLower();
+                    Console.Write("\n Enter The number of words: ");
+                    int numberOfWords = int.Parse(Console.ReadLine());
+                    switch (fileName)
+                    {
+                        case "file1":
+                            GetWordsFromFile(file1, numberOfWords);
+                            break;
+                        case "file2":
+                            GetWordsFromFile(file2, numberOfWords);
+                            break;
+                        case "file3":
+                            GetWordsFromFile(file3, numberOfWords);
+                            break;
+                    }
+                    BackToMenu();
+                    break;
+
+                case 3:
+                    Console.Clear();
+                    Console.WriteLine("\n Search results : ");
+                    myTree.Traverse(root);
+                    BackToMenu();
+                    break;
+
+                case 4:
+                    System.Environment.Exit(1);
+                    break;
+            }
+        }
+
+        private void BackToMenu()
+        {
+            Console.Write("\n Do you want to back to menu: (y/n)  ");
+            string input = CheckInput(Console.ReadLine().ToLower().Trim());
+
+            if (input == "y")
+            {
+                ShowMenu();
+            }
+            else
+            {
+                System.Environment.Exit(1);
+            }
+        }
+
+        private string CheckInput(string input)
+        {
+            while (input != "n" && input != "y")
+            {
+                Console.Write("\n Invalid input, enter 'y' or 'n': ");
+                input = Console.ReadLine().ToLower().Trim();
+            }
+
+            return input;
+        }
+
 
         private Word FindMaxOccurrences(string word)
         {
@@ -155,7 +247,7 @@ namespace FindWords.FindWordsInFiles
             return 0;*/
         }
 
-        public void InserInList(List<Word> words, string textFromFile)
+        private void InserInList(List<Word> words, string textFromFile)
         {
             string[] WordsIntext = textFromFile.Split(splitItems);
             foreach (var word in WordsIntext) // O(n)
@@ -195,9 +287,18 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        private void InsertResultatInTree(Word newWord)
+        private void GetWordsFromFile(List<Word> file, int amount)
         {
-            myTree.Insert(root,newWord);
+            foreach(var item in file)
+            {
+                while (item.amount > 0 && amount>0)
+                {
+                    Console.Write(item.name + " - ");
+                    item.amount--;
+                    amount--;
+                }
+                
+            }
             
         }
     }
