@@ -191,7 +191,6 @@ namespace FindWords.FindWordsInFiles
             }
 
             return result;
-
         }
 
         private int GetMaximum(int num1, int num2, int num3)
