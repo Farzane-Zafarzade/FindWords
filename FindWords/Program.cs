@@ -14,6 +14,7 @@ namespace FindWords
         
         static void Main(string[] args)
         {
+           
             FindWord MyProgram = new();
             MyProgram.Run();  
         }

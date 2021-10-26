@@ -38,7 +38,7 @@ namespace FindWords.Trees
             {
                 return;
             }
-            Console.Write(" - " + root.word.name);
+            Console.WriteLine( " " + root.word.name);
             Traverse(root.left);
             Traverse(root.right);
         }

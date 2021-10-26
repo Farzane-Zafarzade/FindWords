@@ -15,7 +15,7 @@ namespace FindWords.FindWordsInFiles
         private List<Word> file3 = new();
         private bool keepGoing = true;
 
-        private char[] splitItems = { ' ', '.', ',', '-','\t','\n',';' };
+        private string[] splitItems = { " ", ".", ",", "-", "–", ";", ":", "?", "!" ,"\n", "\t", "(", ")", "\r", "\'", " \"", "\\", "“", "”", "/", "{", "}", "[", "]", "_", "|", "#", "$", "%"};
 
         public void Run()
         {
@@ -247,9 +247,9 @@ namespace FindWords.FindWordsInFiles
             return 0;*/
         }
 
-        private void InserInList(List<Word> words, string textFromFile)
+        public void InserInList(List<Word> words, string textFromFile)
         {
-            string[] WordsIntext = textFromFile.Split(splitItems);
+            string[] WordsIntext = textFromFile.Split(splitItems,StringSplitOptions.RemoveEmptyEntries);
             foreach (var word in WordsIntext) // O(n)
             {
 
@@ -262,20 +262,20 @@ namespace FindWords.FindWordsInFiles
                         name = word,
                         amount = 1
                     };
-                    
-                    if (lenght == 0)
-                    {
-                        words.Add(newWord);
-                    }
-                    else
-                    {
-                        while (lenght > 0 && words[lenght - 1].name.CompareTo(newWord.name) == 1) //O(n)
-                        {
-                            lenght--;
-                        }
-                        words.Insert(lenght, newWord);
 
-                    }
+                     if (lenght == 0)
+                     {
+                         words.Add(newWord);
+                     }
+                     else
+                     {
+                         while (lenght > 0 && words[lenght - 1].name.CompareTo(newWord.name) == 1) //O(n)
+                         {
+                             lenght--;
+                         }
+                         words.Insert(lenght, newWord);
+
+                     }
 
                 }
                 else
