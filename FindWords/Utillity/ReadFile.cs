@@ -8,6 +8,7 @@ namespace FindWords.Utillity
     {
         public static string pathFile;
 
+        
         public static string ReadingFromFile()
         {
             string text = "";

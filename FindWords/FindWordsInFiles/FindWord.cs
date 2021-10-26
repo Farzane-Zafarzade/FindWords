@@ -96,12 +96,12 @@ namespace FindWords.FindWordsInFiles
                     string fileName = Console.ReadLine().Trim().ToLower();
                     Console.Write("\n Enter The number of words: ");
                     //int numberOfWords = int.Parse(Console.ReadLine());
-                    int.TryParse(Console.ReadLine(), out int numberOfWords);
+                    _= int.TryParse(Console.ReadLine(), out int numberOfWords);
                     if(numberOfWords <= 0)
                     {
                         Console.WriteLine("Invalid input, please enter a positive number higher than 0.");
                         Console.Write("\n Enter The number of words: ");
-                        int.TryParse(Console.ReadLine(), out numberOfWords);
+                        _= int.TryParse(Console.ReadLine(), out numberOfWords);
                     }
                     switch (fileName)
                     {

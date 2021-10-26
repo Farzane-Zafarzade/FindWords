@@ -5,15 +5,15 @@ using System;
 namespace FindWords.Trees
 {
     /// <summary>
-    /// Class of the data structure where the search results are storing.
+    /// Class of the data structure where the search results are stored.
     /// </summary>
     class BinaryTree
     {
         /// <summary>
-        /// Method for inserting each new word of searching in the tree.
+        /// Insert each new word of searching in the tree.
         /// </summary>
-        /// <param name="root"></param>
-        /// <param name="v"></param>
+        /// <param name="root">the root of the tree.</param>
+        /// <param name="v">the inserted word</param>
         /// <returns>root</returns>
         public Node Insert(Node root, Word v)
         {
@@ -38,7 +38,7 @@ namespace FindWords.Trees
         /// <summary>
         /// Print out the nodes of the tree
         /// </summary>
-        /// <param name="root"></param>
+        /// <param name="root">The root of the binary tree.</param>
         public void Traverse(Node root)
         {
             if (root == null)
