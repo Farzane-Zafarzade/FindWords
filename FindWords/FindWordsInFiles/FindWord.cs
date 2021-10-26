@@ -99,7 +99,7 @@ namespace FindWords.FindWordsInFiles
                     _= int.TryParse(Console.ReadLine(), out int numberOfWords);
                     if(numberOfWords <= 0)
                     {
-                        Console.WriteLine("Invalid input, please enter a positive number higher than 0.");
+                        Console.WriteLine("Invalid input, please enter a positive number.");
                         Console.Write("\n Enter The number of words: ");
                         _= int.TryParse(Console.ReadLine(), out numberOfWords);
                     }
