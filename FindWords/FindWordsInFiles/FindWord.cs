@@ -13,8 +13,7 @@ namespace FindWords.FindWordsInFiles
         private List<Word> file1 = new();
         private List<Word> file2 = new();
         private List<Word> file3 = new();
-        //private bool keepGoing = true;
-
+        
         private char[] splitItems = { ' ', '.', ',', '-','\t','\n',';' };
 
         public void Run()
@@ -32,28 +31,6 @@ namespace FindWords.FindWordsInFiles
             string textOfFile3 = ReadFile.ReadingFromFile().ToLower();
             InsertInList(file3, textOfFile3);
             ShowMenu();
-           /* while (keepGoing)
-            {
-
-
-                Console.Write("\n Enter the word you want to search: ");
-                string searchWord = Console.ReadLine().ToLower().Trim();
-                Word newWord = FindMaxOccurrences(searchWord);
-                Console.WriteLine("\n {0} has max amount of <{1}> and it is {2}", newWord.FlieName, newWord.name, newWord.amount);
-                myTree.Insert(root, newWord);
-     
-                Console.Write("\n Want to search another word? (y/n) ");
-                string answer = Console.ReadLine().Trim().ToLower();
-                if (answer == "n")
-                {
-                    Console.WriteLine("\n Search resultat is: ");
-                    myTree.Traverse(root);
-                    keepGoing = false;
-                    Console.WriteLine("\n Press Enter to exit");
-                    Console.ReadKey();
-                }
-            }*/
-            
         }
 
         private void ShowMenu()
