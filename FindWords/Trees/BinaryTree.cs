@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FindWords.Model;
+﻿using FindWords.Model;
+using System;
 
 
 namespace FindWords.Trees
@@ -14,7 +10,7 @@ namespace FindWords.Trees
     class BinaryTree
     {
         /// <summary>
-        /// Method for insserting each new word of searching in the tree.
+        /// Method for inserting each new word of searching in the tree.
         /// </summary>
         /// <param name="root"></param>
         /// <param name="v"></param>

@@ -1,9 +1,5 @@
-﻿using System;
+﻿using FindWords.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FindWords.Model;
 
 namespace FindWords.Utillity
 {
