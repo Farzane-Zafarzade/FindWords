@@ -1,14 +1,16 @@
-﻿using System;
+﻿using FindWords.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FindWords.Model;
 
 namespace FindWords.Utillity
 {
     public static class BinarySearch
     {
+        /// <summary>
+        /// Search for the keyword that match in the list
+        /// </summary>
+        /// <param name="words">The list of object Word</param>
+        /// <param name="x">the keyword</param>
+        /// <returns></returns>
         public static int Search(List<Word> words, string x)
         {
             int l = 0;

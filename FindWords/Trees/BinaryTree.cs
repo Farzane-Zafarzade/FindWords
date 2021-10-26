@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FindWords.Model;
+﻿using FindWords.Model;
+using System;
 
 
 namespace FindWords.Trees
 {
+    /// <summary>
+    /// Class of the data structure where the search results are stored.
+    /// </summary>
     class BinaryTree
     {
-
+        /// <summary>
+        /// Insert each new word of searching in the tree.
+        /// </summary>
+        /// <param name="root">the root of the tree.</param>
+        /// <param name="v">the inserted word</param>
+        /// <returns>root</returns>
         public Node Insert(Node root, Word v)
         {
             if (root == null)
@@ -31,7 +35,10 @@ namespace FindWords.Trees
             return root;
         }
 
-
+        /// <summary>
+        /// Print out the nodes of the tree
+        /// </summary>
+        /// <param name="root">The root of the binary tree.</param>
         public void Traverse(Node root)
         {
             if (root == null)

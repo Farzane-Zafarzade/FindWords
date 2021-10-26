@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.Text;
 
 namespace FindWords.Utillity
 {
@@ -11,6 +8,7 @@ namespace FindWords.Utillity
     {
         public static string pathFile;
 
+        
         public static string ReadingFromFile()
         {
             string text = "";
