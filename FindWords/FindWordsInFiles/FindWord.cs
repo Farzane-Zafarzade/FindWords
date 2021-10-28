@@ -13,8 +13,7 @@ namespace FindWords.FindWordsInFiles
         private List<Word> file1 = new();
         private List<Word> file2 = new();
         private List<Word> file3 = new();
-        private bool keepGoing = true;
-
+        
         private string[] splitItems = { " ", ".", ",", "-", "–", ";", ":", "?", "!" ,"\n", "\t", "(", ")", "\r", "\'", " \"", "\\", "“", "”", "/", "{", "}", "[", "]", "_", "|", "#", "$", "%"};
 
         public void Run()
@@ -63,7 +62,7 @@ namespace FindWords.FindWordsInFiles
                     Console.Write("\n Enter the word you want to search: ");
                     string searchWord = Console.ReadLine().ToLower().Trim();
                     Word newWord = FindMaxOccurrences(searchWord);
-                    Console.WriteLine("\n Max amount of {0} is {1} in {2}", newWord.name, newWord.amount, newWord.FlieName);
+                    Console.WriteLine("\n Max amount of {0} is {1} in {2}", newWord.name, newWord.amount, newWord.FileName);
                     myTree.Insert(root, newWord);
                     BackToMenu();
                     break;
@@ -73,7 +72,6 @@ namespace FindWords.FindWordsInFiles
                     Console.Write("\n Choose the file you want to show words from that (file1 , file2 , file3): ");
                     string fileName = Console.ReadLine().Trim().ToLower();
                     Console.Write("\n Enter The number of words: ");
-                    //int numberOfWords = int.Parse(Console.ReadLine());
                     _= int.TryParse(Console.ReadLine(), out int numberOfWords);
                     if(numberOfWords <= 0)
                     {
@@ -152,12 +150,12 @@ namespace FindWords.FindWordsInFiles
                 case -1:
                     result.name = word;
                     result.amount = 0;
-                    result.FlieName = " none of files ";
+                    result.FileName = " none of files ";
                     break;
                 case 0:
                     result.name = word;
                     result.amount = amountInFile1;
-                    result.FlieName = "all files";
+                    result.FileName = "all files";
                     break;
                 case 1:
                     result.name = word;
