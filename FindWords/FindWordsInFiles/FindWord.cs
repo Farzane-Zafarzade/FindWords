@@ -8,14 +8,18 @@ namespace FindWords.FindWordsInFiles
 {
     public class FindWord
     {
+        // Ett instans av binary tree för att lagra vår söknings resultat
         private BinaryTree myTree = new();
+        // Det första nodet av tre
         private Node root = new();
+        // En list för att lagra ord som läsas in
         private List<Word> file1 = new();
         private List<Word> file2 = new();
         private List<Word> file3 = new();
-        
+        //Tecken som separerar ordena i filerna.
         private string[] splitItems = { " ", ".", ",", "-", "–", ";", ":", "?", "!" ,"\n", "\t", "(", ")", "\r", "\'", " \"", "\\", "“", "”", "/", "{", "}", "[", "]", "_", "|", "#", "$", "%"};
 
+        //Metoden som initilerar programmet.
         public void Run()
         {
             Console.Write("\n Enter the first file path: ");
@@ -33,6 +37,7 @@ namespace FindWords.FindWordsInFiles
             ShowMenu();
         }
 
+        //Visa huvudmeny för valen i programmet för användare.
         private void ShowMenu()
         {
             Console.Clear();
@@ -52,7 +57,7 @@ namespace FindWords.FindWordsInFiles
             ShowSelectedOption(choice);
         }
 
-
+        //Visa kommande steg som användaren har valt i huvudmenyn.
         public void ShowSelectedOption(int choice)
         {
             switch (choice)
@@ -107,6 +112,8 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
+        //Visa alternativt val om användaren vill återgå tillbaka 
+        //till huvudmenyn eller att avsluta.
         private void BackToMenu()
         {
             Console.Write("\n Do you want to back to menu: (y/n)  ");
@@ -122,6 +129,7 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
+        //Kontrollera om användaren har rätt typ av inmatning.
         private string CheckInput(string input)
         {
             while (input != "n" && input != "y")
@@ -129,20 +137,17 @@ namespace FindWords.FindWordsInFiles
                 Console.Write("\n Invalid input, enter 'y' or 'n': ");
                 input = Console.ReadLine().ToLower().Trim();
             }
-
             return input;
         }
 
 
+        //Att hitta den mest förekommande ord som användare söker.
         private Word FindMaxOccurrences(string word)
         {
             Word result= new();
             int amountInFile1 = CountOccurrences(file1, word);
-           
             int amountInFile2 = CountOccurrences(file2, word);
-          
             int amountInFile3 = CountOccurrences(file3, word);
-            
             int max = GetMaximum(amountInFile1, amountInFile2, amountInFile3);
 
             switch (max)
@@ -173,10 +178,10 @@ namespace FindWords.FindWordsInFiles
                     result.FileName = "File 3";
                     break;
             }
-
             return result;
         }
 
+        //Metoden ger det största talet utav 3 som inparametrar.
         private int GetMaximum(int num1, int num2, int num3)
         {
             if(num1==num2 && num2 == num3)
@@ -208,6 +213,7 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
+        //Sökmetoden för att hitta ett ords förekomster i en lista av ord.
         private int CountOccurrences(List<Word> wordsInList, string word)  
         {
             int index=BinarySearch.Search(wordsInList, word);//O(log n)
@@ -219,23 +225,15 @@ namespace FindWords.FindWordsInFiles
             {
                 return -1;
             }
-
-           /* foreach(var item in wordsInList)
-            {
-                if (item.name == word) o(n)
-                {
-                    return item.amount;
-                }
-            }
-            return 0;*/
         }
 
+        //Metoden tar emot ett ord. Om ordet finns i listan, ökar ordets antal(amount) med 1.
+        //Om ordet inte finns, läggs ordet till i listan. 
         private void InsertInList(List<Word> words, string textFromFile)
         {
             string[] WordsIntext = textFromFile.Split(splitItems,StringSplitOptions.RemoveEmptyEntries);
             foreach (var word in WordsIntext) // O(n)
             {
-
                 int index = BinarySearch.Search(words, word); //O(log(n))
                 if (index == -1)
                 {
@@ -257,19 +255,16 @@ namespace FindWords.FindWordsInFiles
                              lenght--;
                          }
                          words.Insert(lenght, newWord);
-
                      }
-
                 }
                 else
                 {
                     words[index].amount++;
-
                 }
-
             }
         }
 
+        //Skriv ut de antal ord i början av listan som användaren angett.
         private void GetWordsFromFile(List<Word> file, int num)
         {
             foreach(var item in file)
@@ -280,9 +275,7 @@ namespace FindWords.FindWordsInFiles
                     item.amount--;
                     num--;
                 }
-                
             }
-            
         }
     }
 }

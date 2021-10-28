@@ -6,11 +6,12 @@ namespace FindWords.Utillity
     public static class BinarySearch
     {
         /// <summary>
-        /// Search for the keyword that match in the list
+        /// Söka sökordet som matchar i listan.
         /// </summary>
-        /// <param name="words">The list of object Word</param>
-        /// <param name="x">the keyword</param>
-        /// <returns></returns>
+        /// <param name="words">listan av objekt Word</param>
+        /// <param name="x">sökord</param>
+        /// <returns>Index för sökordet i listan, -1 om ordet inte finns.</returns>
+        /// Tidskomplexiteten O (log n)
         public static int Search(List<Word> words, string x)
         {
             int l = 0;

@@ -8,6 +8,10 @@ namespace FindWords.Utillity
     {
         public static string pathFile;
 
+        /// <summary>
+        /// Metoden för att läsa in en textfil.
+        /// </summary>
+        /// <returns>en sträng av innehåll i filen</returns>
         public static string ReadingFromFile()
         {
             string text = "";

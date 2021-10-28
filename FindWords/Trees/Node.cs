@@ -2,12 +2,9 @@
 
 namespace FindWords.Trees
 {
-    /// <summary>
-    /// The class of template 
-    /// for the keywords of searching.
-    /// </summary>
     public class Node
     {
+        //Instans av klass Word för att lagra info av ett ord.
         public Word word = new();
         public Node left;
         public Node right;

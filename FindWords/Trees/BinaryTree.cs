@@ -4,17 +4,14 @@ using System;
 
 namespace FindWords.Trees
 {
-    /// <summary>
-    /// Class of the data structure where the search results are stored.
-    /// </summary>
     class BinaryTree
     {
         /// <summary>
-        /// Insert each new word of searching in the tree.
+        /// Metoden för insättning av ny sökord i trädet.
         /// </summary>
-        /// <param name="root">the root of the tree.</param>
-        /// <param name="v">the inserted word</param>
-        /// <returns>root</returns>
+        /// <param name="root">roten av träd</param>
+        /// <param name="v">sökordet som ska sättas in</param>
+        /// <returns>roten av trädet</returns>
         public Node Insert(Node root, Word v)
         {
             if (root == null)
@@ -36,9 +33,9 @@ namespace FindWords.Trees
         }
 
         /// <summary>
-        /// Print out the nodes of the tree
+        /// Skriv ut samtliga noder av trädet.
         /// </summary>
-        /// <param name="root">The root of the binary tree.</param>
+        /// <param name="root">Roten av det binära trädet.</param>
         public void Traverse(Node root)
         {
             if (root == null)
