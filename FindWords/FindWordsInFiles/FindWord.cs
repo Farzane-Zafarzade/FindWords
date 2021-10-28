@@ -72,7 +72,6 @@ namespace FindWords.FindWordsInFiles
                     Console.Write("\n Choose the file you want to show words from that (file1 , file2 , file3): ");
                     string fileName = Console.ReadLine().Trim().ToLower();
                     Console.Write("\n Enter The number of words: ");
-                    //int numberOfWords = int.Parse(Console.ReadLine());
                     _= int.TryParse(Console.ReadLine(), out int numberOfWords);
                     if(numberOfWords <= 0)
                     {
