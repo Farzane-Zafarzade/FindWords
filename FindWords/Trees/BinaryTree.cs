@@ -1,7 +1,6 @@
 ﻿using FindWords.Model;
 using System;
 
-
 namespace FindWords.Trees
 {
     class BinaryTree

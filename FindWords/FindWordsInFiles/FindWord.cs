@@ -8,18 +8,18 @@ namespace FindWords.FindWordsInFiles
 {
     public class FindWord
     {
-        // Ett instans av binary tree för att lagra vår söknings resultat
+        // Instans av binära trädet för att lagra vår söknings resultat
         private BinaryTree myTree = new();
-        // Det första nodet av tre
+        // Det första nodet av trädet
         private Node root = new();
-        // En list för att lagra ord som läsas in
+        // En list för att lagra ord som läsas in från textfilen.
         private List<Word> file1 = new();
         private List<Word> file2 = new();
         private List<Word> file3 = new();
         //Tecken som separerar ordena i filerna.
         private string[] splitItems = { " ", ".", ",", "-", "–", ";", ":", "?", "!" ,"\n", "\t", "(", ")", "\r", "\'", " \"", "\\", "“", "”", "/", "{", "}", "[", "]", "_", "|", "#", "$", "%"};
 
-        //Metoden som initilerar programmet.
+        //Metoden som initialiserar programmet.
         public void Run()
         {
             Console.Write("\n Enter the first file path: ");
@@ -112,8 +112,10 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        //Visa alternativt val om användaren vill återgå tillbaka 
-        //till huvudmenyn eller att avsluta.
+        /// <summary>
+        /// Visa alternativt val om användaren vill återgå tillbaka 
+        /// till huvudmenyn eller att avsluta.
+        /// </summary>
         private void BackToMenu()
         {
             Console.Write("\n Do you want to back to menu: (y/n)  ");
@@ -129,7 +131,11 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        //Kontrollera om användaren har rätt typ av inmatning.
+        /// <summary>
+        /// Kontrollera om användaren har rätt typ av inmatning.
+        /// </summary>
+        /// <param name="input">Användarens inmatning</param>
+        /// <returns>inmatning i sträng</returns>
         private string CheckInput(string input)
         {
             while (input != "n" && input != "y")
@@ -141,7 +147,11 @@ namespace FindWords.FindWordsInFiles
         }
 
 
-        //Att hitta den mest förekommande ord som användare söker.
+        /// <summary>
+        /// Att hitta den mest förekommande ord som användare söker.
+        /// </summary>
+        /// <param name="word">sökord</param>
+        /// <returns>Lista av ord</returns>
         private Word FindMaxOccurrences(string word)
         {
             Word result= new();
@@ -181,7 +191,13 @@ namespace FindWords.FindWordsInFiles
             return result;
         }
 
-        //Metoden ger det största talet utav 3 som inparametrar.
+        /// <summary>
+        /// Metoden ger det största talet utav 3 tal som inparametrar.
+        /// </summary>
+        /// <param name="num1">tal1</param>
+        /// <param name="num2">tal2</param>
+        /// <param name="num3">tal3</param>
+        /// <returns>det största talet</returns>
         private int GetMaximum(int num1, int num2, int num3)
         {
             if(num1==num2 && num2 == num3)
@@ -213,7 +229,12 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        //Sökmetoden för att hitta ett ords förekomster i en lista av ord.
+        /// <summary>
+        /// Sökmetoden för att hitta ett ords förekomster i en lista av ord.
+        /// </summary>
+        /// <param name="wordsInList">lista av ord</param>
+        /// <param name="word">sökord</param>
+        /// <returns>Förekomster av ordet i listan.</returns>
         private int CountOccurrences(List<Word> wordsInList, string word)  
         {
             int index=BinarySearch.Search(wordsInList, word);//O(log n)
@@ -227,8 +248,12 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        //Metoden tar emot ett ord. Om ordet finns i listan, ökar ordets antal(amount) med 1.
-        //Om ordet inte finns, läggs ordet till i listan. 
+        /// <summary>
+        /// Metoden tar emot ord i en lista. Om ordet finns i listan, ökar ordets antal(amount) med 1.
+        /// Om ordet inte finns, läggs ordet till i listan.
+        /// </summary>
+        /// <param name="words">Lista av objekt Word</param>
+        /// <param name="textFromFile"></param>        
         private void InsertInList(List<Word> words, string textFromFile)
         {
             string[] WordsIntext = textFromFile.Split(splitItems,StringSplitOptions.RemoveEmptyEntries);

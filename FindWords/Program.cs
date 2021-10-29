@@ -1,6 +1,5 @@
 ﻿using FindWords.FindWordsInFiles;
 
-
 namespace FindWords
 {
     class Program
