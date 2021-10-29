@@ -128,7 +128,7 @@
 
                 case 3:
                     Console.Clear();
-                    Console.WriteLine("\n Search results : ");
+                    Console.WriteLine("\n Search results: \n");
                     myTree.Traverse(root);
                     BackToMenu();
                     break;

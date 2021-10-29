@@ -45,7 +45,7 @@ namespace FindWords.Trees
             {
                 return;
             }
-            Console.WriteLine( " " + root.word.name);
+            Console.WriteLine(" Word: {0} - amount: {1} - File name: {2}\n ", root.word.name, root.word.amount, root.word.FileName);
             Traverse(root.left);
             Traverse(root.right);
         }
