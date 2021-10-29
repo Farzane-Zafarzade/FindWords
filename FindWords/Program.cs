@@ -1,23 +1,20 @@
-﻿using FindWords.FindWordsInFiles;
-
-
-namespace FindWords
+﻿namespace FindWords
 {
-    class Program
-    {
-        
-        static void Main(string[] args)
-        {
-           
-            FindWord MyProgram = new();
-            //Console.Write("\n Enter the first file path: ");
-            //ReadFile.pathFile = Console.ReadLine();
-            //string textOfFile1 = ReadFile.ReadingFromFile().ToLower();
-           // MyProgram.InserInList(file1, textOfFile1);
-           // MyProgram.GetWordsFromFile(file1,4);
-            MyProgram.Run();  
-        }
+    using FindWords.FindWordsInFiles;
 
-        
+    /// <summary>
+    /// Defines the <see cref="Program" />.
+    /// </summary>
+    internal class Program
+    {
+        /// <summary>
+        /// The Main.
+        /// </summary>
+        /// <param name="args">The args<see cref="string[]"/>.</param>
+        internal static void Main(string[] args)
+        {
+            FindWord MyProgram = new();
+            MyProgram.ReadFiles();
+        }
     }
 }

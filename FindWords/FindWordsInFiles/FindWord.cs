@@ -1,39 +1,63 @@
-﻿using System;
-using FindWords.Utillity;
-using FindWords.Model;
-using FindWords.Trees;
-using System.Collections.Generic;
-
-namespace FindWords.FindWordsInFiles
+﻿namespace FindWords.FindWordsInFiles
 {
+    using FindWords.Model;
+    using FindWords.Trees;
+    using FindWords.Utillity;
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="FindWord" />.
+    /// </summary>
     public class FindWord
     {
+        /// <summary>
+        /// Defines the myTree(abstract data structure) to save serach results.
+        /// </summary>
         private BinaryTree myTree = new();
+
+        /// <summary>
+        /// Defines the root to store information of the word that will be searched 
+        /// </summary>
         private Node root = new();
+
+        /// <summary>
+        /// Defines the file1 to store the words of the first file.
+        /// </summary>
         private List<Word> file1 = new();
+
+        /// <summary>
+        /// Defines the file2.
+        /// </summary>
         private List<Word> file2 = new();
+
+        /// <summary>
+        /// Defines the file3.
+        /// </summary>
         private List<Word> file3 = new();
-        private bool keepGoing = true;
 
-        private string[] splitItems = { " ", ".", ",", "-", "–", ";", ":", "?", "!" ,"\n", "\t", "(", ")", "\r", "\'", " \"", "\\", "“", "”", "/", "{", "}", "[", "]", "_", "|", "#", "$", "%"};
+        /// <summary>
+        /// A array of string to store word separators in a text.
+        /// </summary>
+        private string[] splitItems = { " ", ".", ",", "-", "–", ";", ":", "?", "!", "\n", "\t", "(", ")", "\r", "\'", " \"", "\\", "“", "”", "/", "{", "}", "[", "]", "_", "|", "#", "$", "%" };
 
-        public void Run()
+        /// <summary>
+        /// Reads files and store content in a list of Words.
+        /// </summary>
+        public void ReadFiles()
         {
-            Console.Write("\n Enter the first file path: ");
-            ReadFile.pathFile = Console.ReadLine();
-            string textOfFile1 = ReadFile.ReadingFromFile().ToLower();
+            string textOfFile1 = ReadFile.ReadingFromFile(@"\1000.txt").ToLower();
             InsertInList(file1, textOfFile1);
-            Console.Write("\n Enter the second file path: ");
-            ReadFile.pathFile = Console.ReadLine();
-            string textOfFile2 = ReadFile.ReadingFromFile().ToLower();
+            string textOfFile2 = ReadFile.ReadingFromFile(@"\1500.txt").ToLower();
             InsertInList(file2, textOfFile2);
-            Console.Write("\n Enter the third file path: ");
-            ReadFile.pathFile = Console.ReadLine();
-            string textOfFile3 = ReadFile.ReadingFromFile().ToLower();
+            string textOfFile3 = ReadFile.ReadingFromFile(@"\3000.txt").ToLower();
             InsertInList(file3, textOfFile3);
             ShowMenu();
         }
 
+        /// <summary>
+        /// Shows main menu and user can choice an option.
+        /// </summary>
         private void ShowMenu()
         {
             Console.Clear();
@@ -53,7 +77,10 @@ namespace FindWords.FindWordsInFiles
             ShowSelectedOption(choice);
         }
 
-
+        /// <summary>
+        /// Display the commands for selected option in the main menu.
+        /// </summary>
+        /// <param name="choice"> The selected option by user <see cref="int"/>.</param>
         public void ShowSelectedOption(int choice)
         {
             switch (choice)
@@ -63,7 +90,7 @@ namespace FindWords.FindWordsInFiles
                     Console.Write("\n Enter the word you want to search: ");
                     string searchWord = Console.ReadLine().ToLower().Trim();
                     Word newWord = FindMaxOccurrences(searchWord);
-                    Console.WriteLine("\n Max amount of {0} is {1} in {2}", newWord.name, newWord.amount, newWord.FlieName);
+                    Console.WriteLine("\n Max amount of {0} is {1} in {2}", newWord.name, newWord.amount, newWord.FileName);
                     myTree.Insert(root, newWord);
                     BackToMenu();
                     break;
@@ -72,25 +99,28 @@ namespace FindWords.FindWordsInFiles
                     Console.Clear();
                     Console.Write("\n Choose the file you want to show words from that (file1 , file2 , file3): ");
                     string fileName = Console.ReadLine().Trim().ToLower();
-                    Console.Write("\n Enter The number of words: ");
-                    //int numberOfWords = int.Parse(Console.ReadLine());
-                    _= int.TryParse(Console.ReadLine(), out int numberOfWords);
-                    if(numberOfWords <= 0)
+                    while (fileName != "file1" && fileName != "file2" && fileName != "file3")
                     {
-                        Console.WriteLine("Invalid input, please enter a positive number.");
-                        Console.Write("\n Enter The number of words: ");
-                        _= int.TryParse(Console.ReadLine(), out numberOfWords);
+                        Console.Write("\n Invalid input, try again: ");
+                        fileName= fileName = Console.ReadLine().Trim().ToLower();
+                    }
+                    Console.Write("\n Enter The number of words: ");
+                    bool Checked = int.TryParse(Console.ReadLine(),out int numberOfWords);
+                    while(numberOfWords<0 || !Checked)
+                    {
+                        Console.Write("\n Invalid input, try again: ");
+                        Checked = int.TryParse(Console.ReadLine(), out numberOfWords);
                     }
                     switch (fileName)
                     {
                         case "file1":
-                            GetWordsFromFile(file1, numberOfWords);
+                            GetFirstWordsFromFile(file1, numberOfWords);
                             break;
                         case "file2":
-                            GetWordsFromFile(file2, numberOfWords);
+                            GetFirstWordsFromFile(file2, numberOfWords);
                             break;
                         case "file3":
-                            GetWordsFromFile(file3, numberOfWords);
+                            GetFirstWordsFromFile(file3, numberOfWords);
                             break;
                     }
                     BackToMenu();
@@ -109,55 +139,59 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
+        /// <summary>
+        /// Returns to main menu or exits the program 
+        /// </summary>
         private void BackToMenu()
         {
             Console.Write("\n Do you want to back to menu: (y/n)  ");
-            string input = CheckInput(Console.ReadLine().ToLower().Trim());
+            string input = Console.ReadLine().Trim().ToLower();
 
             if (input == "y")
             {
                 ShowMenu();
             }
-            else
+            else if (input == "n")
             {
                 System.Environment.Exit(1);
             }
-        }
-
-        private string CheckInput(string input)
-        {
-            while (input != "n" && input != "y")
+            else
             {
                 Console.Write("\n Invalid input, enter 'y' or 'n': ");
                 input = Console.ReadLine().ToLower().Trim();
             }
 
-            return input;
         }
 
-
+        /// <summary>
+        /// Finds the maximum number of occurrences of a word in three files.
+        /// </summary>
+        /// <param name="word">The search item <see cref="string"/>.</param>
+        /// <returns>The <see cref="Word"/>.</returns>
+        /// Time complexity: O(logn)
         private Word FindMaxOccurrences(string word)
         {
-            Word result= new();
-            int amountInFile1 = CountOccurrences(file1, word);
-           
-            int amountInFile2 = CountOccurrences(file2, word);
-          
-            int amountInFile3 = CountOccurrences(file3, word);
-            
-            int max = GetMaximum(amountInFile1, amountInFile2, amountInFile3);
+            Word result = new();
+
+            int amountInFile1 = CountOccurrences(file1, word); //O(log n)
+
+            int amountInFile2 = CountOccurrences(file2, word); //O(log n)
+
+            int amountInFile3 = CountOccurrences(file3, word); //O(log n)
+
+            int max = GetMaximum(amountInFile1, amountInFile2, amountInFile3); //o(3)
 
             switch (max)
             {
                 case -1:
                     result.name = word;
                     result.amount = 0;
-                    result.FlieName = " none of files ";
+                    result.FileName = " none of files ";
                     break;
                 case 0:
                     result.name = word;
                     result.amount = amountInFile1;
-                    result.FlieName = "all files";
+                    result.FileName = "all files";
                     break;
                 case 1:
                     result.name = word;
@@ -179,9 +213,17 @@ namespace FindWords.FindWordsInFiles
             return result;
         }
 
+        /// <summary>
+        /// Find and returns the largest number.
+        /// </summary>
+        /// <param name="num1">The first number <see cref="int"/>.</param>
+        /// <param name="num2">The second number <see cref="int"/>.</param>
+        /// <param name="num3">The third number <see cref="int"/>.</param>
+        /// <returns> The largets number  <see cref="int"/>.</returns>
+        /// Time complexity O(3)
         private int GetMaximum(int num1, int num2, int num3)
         {
-            if(num1==num2 && num2 == num3)
+            if (num1 == num2 && num2 == num3)
             {
                 if (num1 == -1)
                 {
@@ -189,9 +231,9 @@ namespace FindWords.FindWordsInFiles
                 }
                 return 0;
             }
-            if(num1 > num2)
+            if (num1 > num2)
             {
-                if(num1 > num3)
+                if (num1 > num3)
                 {
                     return 1;
                 }
@@ -210,10 +252,17 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        private int CountOccurrences(List<Word> wordsInList, string word)  
+        /// <summary>
+        /// Returns the number of occurrences of a word in a file.
+        /// </summary>
+        /// <param name="wordsInList"> The List of words <see cref="List{Word}"/>.</param>
+        /// <param name="word"> The new word <see cref="string"/>.</param>
+        /// <returns> the number of occurrences <see cref="int"/>.</returns>
+        /// Time complexity //O(log n)
+        private int CountOccurrences(List<Word> wordsInList, string word)
         {
-            int index=BinarySearch.Search(wordsInList, word);//O(log n)
-            if(index>= 0)
+            int index = BinarySearch.Search(wordsInList, word);
+            if (index >= 0)
             {
                 return wordsInList[index].amount;
             }
@@ -221,20 +270,20 @@ namespace FindWords.FindWordsInFiles
             {
                 return -1;
             }
-
-           /* foreach(var item in wordsInList)
-            {
-                if (item.name == word) o(n)
-                {
-                    return item.amount;
-                }
-            }
-            return 0;*/
         }
 
-        private void InsertInList(List<Word> words, string textFromFile)
+        /// <summary>
+        /// Separates words in a text then inserts words in a list of Word(Word Class).
+        /// Before inserting a new word, it checks if the word is in file
+        /// If the word does not exist, it will be added to the list in right place(the list is sorted)
+        /// if the word exist, its amount increase
+        /// </summary>
+        /// <param name="words"> The list of words <see cref="List{Word}"/>.</param>
+        /// <param name="textFromFile"> The text of file <see cref="string"/>.</param>
+        /// Time complexity worst case: o(n^2) - best case: O(nlogn)
+        public void InsertInList(List<Word> words, string textFromFile)
         {
-            string[] WordsIntext = textFromFile.Split(splitItems,StringSplitOptions.RemoveEmptyEntries);
+            string[] WordsIntext = textFromFile.Split(splitItems, StringSplitOptions.RemoveEmptyEntries);
             foreach (var word in WordsIntext) // O(n)
             {
 
@@ -248,19 +297,19 @@ namespace FindWords.FindWordsInFiles
                         amount = 1
                     };
 
-                     if (lenght == 0)
-                     {
-                         words.Add(newWord);
-                     }
-                     else
-                     {
-                         while (lenght > 0 && words[lenght - 1].name.CompareTo(newWord.name) == 1) //O(n)
-                         {
-                             lenght--;
-                         }
-                         words.Insert(lenght, newWord);
+                    if (lenght == 0)
+                    {
+                        words.Add(newWord);
+                    }
+                    else
+                    {
+                        while (lenght > 0 && words[lenght - 1].name.CompareTo(newWord.name) == 1) //O(n)
+                        {
+                            lenght--;
+                        }
+                        words.Insert(lenght, newWord);
 
-                     }
+                    }
 
                 }
                 else
@@ -272,19 +321,24 @@ namespace FindWords.FindWordsInFiles
             }
         }
 
-        private void GetWordsFromFile(List<Word> file, int num)
+        /// <summary>
+        /// Shows the X first words in a file
+        /// </summary>
+        /// <param name="file"> The file that will gott the words from <see cref="List{Word}"/>.</param>
+        /// <param name="num"> number of words<see cref="int"/>.</param>
+        /// Time complexity: O(n) 
+        private void GetFirstWordsFromFile(List<Word> file, int num)
         {
-            foreach(var item in file)
+            foreach (var item in file)
             {
-                while (item.amount > 0 && num>0)
+                while (item.amount > 0 && num > 0)
                 {
                     Console.Write(item.name + " - ");
                     item.amount--;
                     num--;
                 }
-                
+
             }
-            
         }
     }
 }

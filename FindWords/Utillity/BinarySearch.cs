@@ -1,22 +1,25 @@
-﻿using FindWords.Model;
-using System.Collections.Generic;
-
-namespace FindWords.Utillity
+﻿namespace FindWords.Utillity
 {
+    using FindWords.Model;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="BinarySearch" />.
+    /// </summary>
     public static class BinarySearch
     {
         /// <summary>
-        /// Search for the keyword that match in the list
+        /// Search for the keyword that match in the list.
         /// </summary>
-        /// <param name="words">The list of object Word</param>
-        /// <param name="x">the keyword</param>
-        /// <returns></returns>
+        /// <param name="words">The list of object Word.</param>
+        /// <param name="x">the keyword.</param>
+        /// <returns>.</returns>
         public static int Search(List<Word> words, string x)
         {
             int l = 0;
             int r = words.Count - 1;
 
-            if(words.Count == 0)
+            if (words.Count == 0)
             {
                 return -1;
             }
@@ -37,7 +40,7 @@ namespace FindWords.Utillity
                     r = m - 1;
                 }
             }
-           
+
             return -1;
         }
     }
